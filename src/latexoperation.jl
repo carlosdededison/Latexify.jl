@@ -88,7 +88,6 @@ function latexoperation(ex::Expr, prevOp::AbstractArray; cdot=true, kwargs...)
 
     if op in keys(comparison_operators) && length(args) == 3
         str = "$(args[2]) $(comparison_operators[op]) $(args[3])"
-        str = "\\left( $str \\right)"
         return str
     end
 
