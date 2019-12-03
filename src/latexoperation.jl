@@ -110,7 +110,7 @@ function latexoperation(ex::Expr, prevOp::AbstractArray; cdot=true, kwargs...)
 
     if ex.head == :ref
         argstring = join(args[2:end], ", ")
-        return "\\mathrm{$op}\\left[$argstring\\right]"
+		return "{$op}_{$argstring}"
     end
 
     if ex.head == :call
