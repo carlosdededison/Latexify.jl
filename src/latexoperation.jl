@@ -16,6 +16,13 @@ function latexoperation(ex::Expr, prevOp::AbstractArray; cdot=true, kwargs...)
         return "\\frac{$(args[2])}{$(args[3])}"
 
     elseif op in [:*, :.*]
+		if length(args) == 3 &&
+		   argsexpr[1] isa Number &&
+		   argsexpr[2] isa Symbol &&
+		   length(args[3]) == 1
+			return "$(args[2]) $(args[3])"
+		end
+
         str=""
         for i in 2:length(args)
             arg = args[i]
