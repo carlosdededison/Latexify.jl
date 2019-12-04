@@ -108,7 +108,13 @@ function latexoperation(ex::Expr, prevOp::AbstractArray; cdot=true, kwargs...)
 
     if op in keys(function2latex)
 		if op in trigonometric_functions && length(args) == 2 &&
-				 (argsexpr[1] isa Int64 || argsexpr[1] isa Symbol)
+				 (argsexpr[1] isa Int64
+				  || argsexpr[1] isa Symbol
+				  ||	(startswith(args[2], "\\frac") &&
+						length(split(args[2], "}")) == 3 &&
+						isempty(split(args[2], "}")[3])
+						)
+				 )
 			str = "$(function2latex[op])\\thinspace{$(args[2])}"
 		else
 			str = "$(function2latex[op])\\left( $(join(args[2:end], ", ")) \\right)"
