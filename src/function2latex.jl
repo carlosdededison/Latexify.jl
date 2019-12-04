@@ -38,6 +38,9 @@ const function2latex = Dict{Symbol, String}(
 	:sin =>   "\\mathrm{sen}",
     :cos =>   "\\mathrm{cos}",
     :tan =>   "\\mathrm{tg}",
+	:sind =>  "\\mathrm{sen}",
+    :cosd =>  "\\mathrm{cos}",
+    :tand =>  "\\mathrm{tg}",
     :cot =>   "\\mathrm{cotg}",
     :sec =>   "\\mathrm{sec}",
     :csc =>   "\\mathrm{cos\\,sec}",
@@ -73,6 +76,9 @@ const trigonometric_functions = [
     :sin,
     :cos,
     :tan,
+	:sind,
+	:cosd,
+	:tand,
     :cot,
     :sec,
     :csc,
@@ -99,3 +105,8 @@ const trigonometric_functions = [
     :acsch,
     ]
 
+const trigonometric_functions_degrees = [
+	:sind,
+	:cosd,
+	:tand,
+	]

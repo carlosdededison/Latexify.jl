@@ -107,11 +107,17 @@ function latexoperation(ex::Expr, prevOp::AbstractArray; cdot=true, kwargs...)
     end
 
     if op in keys(function2latex)
-		if op in trigonometric_functions &&
+		if op in trigonometric_functions && length(args) == 2 &&
 				 (argsexpr[1] isa Int64 || argsexpr[1] isa Symbol)
-			return "$(function2latex[op])\\thinspace{$(args[2])}"
+			str = "$(function2latex[op])\\thinspace{$(args[2])}"
 		else
-			return "$(function2latex[op])\\left( $(join(args[2:end], ", ")) \\right)"
+			str = "$(function2latex[op])\\left( $(join(args[2:end], ", ")) \\right)"
+		end
+
+		if op in trigonometric_functions_degrees
+			return str * "^\\circ"
+		else
+			return str
 		end
     end
 
