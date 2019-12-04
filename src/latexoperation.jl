@@ -8,6 +8,7 @@ a parenthesis is needed.
 """
 function latexoperation(ex::Expr, prevOp::AbstractArray; cdot=true, kwargs...)
     op = ex.args[1]
+	argsexpr = ex.args[2:end]
     convertSubscript!(ex)
     args = map(i -> i isa Number ? latexraw(i; kwargs...) : i, ex.args)
 
@@ -99,7 +100,12 @@ function latexoperation(ex::Expr, prevOp::AbstractArray; cdot=true, kwargs...)
     end
 
     if op in keys(function2latex)
-        return "$(function2latex[op])\\left( $(join(args[2:end], ", ")) \\right)"
+		if op in trigonometric_functions &&
+				 (argsexpr[1] isa Int64 || argsexpr[1] isa Symbol)
+			return "$(function2latex[op])\\thinspace{$(args[2])}"
+		else
+			return "$(function2latex[op])\\left( $(join(args[2:end], ", ")) \\right)"
+		end
     end
 
     op == :sqrt && return "\\$op{$(args[2])}"
@@ -113,7 +119,7 @@ function latexoperation(ex::Expr, prevOp::AbstractArray; cdot=true, kwargs...)
     end
 
     if ex.head == :call
-        return "\\mathrm{$op}\\left( $(join(args[2:end], ", ")) \\right)"
+		return "\\mathrm{$op}\\left( $(join(args[2:end], ", ")) \\right)"
     end
 
     if ex.head == :tuple
